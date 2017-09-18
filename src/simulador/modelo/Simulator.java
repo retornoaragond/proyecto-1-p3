@@ -1,6 +1,11 @@
 
 package simulador.modelo;
 
-public class Simulator {
-    
+import java.util.Observable;
+
+public class Simulator extends Observable{
+    public Simulator() {
+        System.out.println("Inicializando modelo..");
+    }
+
 }
