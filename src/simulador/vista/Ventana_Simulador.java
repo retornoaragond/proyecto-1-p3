@@ -22,17 +22,14 @@ public class Ventana_Simulador extends JFrame
     public Ventana_Simulador(Control_Simulator nuevoGestor) {
         super("MEF");
         System.out.println("Creando ventana principal..");
-
         System.out.println("Asociando clase de control..");
         this.gestorPrincipal = nuevoGestor;
         configurar();
     }
-
     // </editor-fold>
     // <editor-fold desc="Configuración" defaultstate="collapsed" >
     private void configurar() {
         gestorPrincipal.registrar(this);
-
         ajustarComponentes(getContentPane());
         setResizable(true);
         setMinimumSize(new Dimension(400, 300));
@@ -49,14 +46,11 @@ public class Ventana_Simulador extends JFrame
 
     private void ajustarComponentes(Container c) {
         System.out.println("Configurando componentes..");
-
         ajustarMenus(c);
-
     }
 
     private void ajustarMenus(Container c) {
         menuPrincipal = new JMenuBar();
-
         menuPrincipal.add(menuArchivo = new JMenu("Archivo"));
         menuArchivo.add(itemGuardar = new JMenuItem("Guardar"));
         menuArchivo.add(itemRecuperar = new JMenuItem("Recuperar"));
@@ -67,10 +61,8 @@ public class Ventana_Simulador extends JFrame
         menuEstados.add(itemInicial = new JMenuItem("Inicial"));
         menuEstados.add(itemIntermedio = new JMenuItem("Intermedio"));
         menuEstados.add(itemFinal = new JMenuItem("Final"));
-
         menuPrincipal.add(menuVerificar = new JMenu("Verificar"));
         menuVerificar.add(itemHilera = new JMenuItem("Hilera"));
-
         setJMenuBar(menuPrincipal);
     }
 
@@ -84,8 +76,7 @@ public class Ventana_Simulador extends JFrame
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     // </editor-fold>
-    
-        // <editor-fold desc="Métodos" defaultstate="collapsed">
+    // <editor-fold desc="Métodos" defaultstate="collapsed">
     public void cerrarVentana() {
         if (JOptionPane.showConfirmDialog(this,
                 "¿Desea cerrar la aplicación?", "Confirmar",
