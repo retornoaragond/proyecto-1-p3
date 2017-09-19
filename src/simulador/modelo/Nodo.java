@@ -1,44 +1,39 @@
 
 package simulador.modelo;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
+
 
 public class Nodo {
     
-    public Nodo(ArrayList<String> a, boolean b){
-        this.tags = a;
-        this.paths = new ArrayList<>();
-        accept = b;  
+    public Nodo(boolean b, String s){
+        
+        name = s;
+        this.paths = new LinkedList<>();
+        accept = b;
+        
     }
     
-    public Nodo(ArrayList<String> a){
-        this(a, false);
+    public Nodo(String s){
+        this(false, s);
     }
     
-    public Nodo(){
-        this(new ArrayList<>(), false);
-    }
     
     public boolean isAccept(){
         return accept;
     }
     
-    public void setPaths(String s, Path p){
-        tags.add(s);
+    public void setPaths(Path p){
         paths.add(p);
     }
     
-    public int getTag(String s){
-        for(int i = 0; i < tags.size(); i++){
-            if(tags.get(i) == null ? s == null : tags.get(i).equals(s)){
-                return i;
-            }
-        }
-        return -1;
+    public List<Path> getPathList(){
+        return paths;
     }
     
     
+    private final String name;
     private final boolean accept;
-    private final List<String> tags;
     private final List<Path> paths;
 }

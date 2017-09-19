@@ -13,6 +13,7 @@ public class Simulator extends Observable{
     // <editor-fold desc="Constructores" defaultstate="collapsed">
     public Simulator() {
         System.out.println("Inicializando modelo..");
+        aut = new Maquina();
         maquina = null;
     }
     
@@ -37,6 +38,14 @@ public class Simulator extends Observable{
         }
     }
     
+    boolean isAccept(String s){
+        if(aut.isND()){
+            return aut.isAcceptND(s);
+        }else{
+            return aut.isAcceptD(s);
+        }
+    }
+    
     public void limpiar(){
         //eliminar la lista que contiene los nodos de la maquina
         //actualizar el observador
@@ -46,6 +55,6 @@ public class Simulator extends Observable{
     
     // <editor-fold desc="Atributos" defaultstate="collapsed">
     private List<Nodo> maquina;
-    
+    private final Maquina aut;
     // </editor-fold>
 }

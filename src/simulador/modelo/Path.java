@@ -1,6 +1,8 @@
 
 package simulador.modelo;
 
+
+
 public class Path {
     
     public Path(String s, Nodo d){
