@@ -1,4 +1,3 @@
-
 package simulador;
 
 import javax.swing.JFrame;
@@ -9,9 +8,7 @@ import simulador.control.Control_Simulator;
 import simulador.modelo.Simulator;
 import simulador.vista.Ventana_Simulador;
 
-
 public class Simulador {
-
 
     public static void main(String[] args) {
         try {

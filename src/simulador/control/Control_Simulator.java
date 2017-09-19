@@ -1,7 +1,6 @@
 package simulador.control;
 
 import java.util.Observer;
-import java.util.Properties;
 import simulador.modelo.Simulator;
 
 public class Control_Simulator {
@@ -13,8 +12,8 @@ public class Control_Simulator {
         this.datos = datos;
     }
     // </editor-fold>
-    
-    // <editor-fold desc="Métodos generales (control)" defaultstate="collapsed">
+
+    // <editor-fold desc="Métodos" defaultstate="collapsed">
     public void registrar(Observer obs) {
         System.out.printf("Registrando observador: %s..%n", obs);
         datos.addObserver(obs);
@@ -24,11 +23,25 @@ public class Control_Simulator {
         System.out.printf("Eliminado observador: %s..%n", obs);
         datos.deleteObserver(obs);
     }
-
-    public String obtenerPropiedad(String id) {
-        return propiedades.getProperty(id);
+    
+    public void abrirarchivo(String archivo){
+        datos.abrir_archivo(archivo);
     }
+    
+    public void guardararchivo(String archivo){
+        datos.abrir_archivo(archivo);
+    }
+    
+    public void limpiar(){
+        datos.limpiar();
+    }
+    
+    public void crea_est_Inicial(String var){
+        
+    }
+
     // </editor-fold>
+    
     // <editor-fold desc="Métodos" defaultstate="collapsed">
     public void cerrarAplicacion() {
         System.out.println("Finalizando aplicación..");
@@ -36,8 +49,8 @@ public class Control_Simulator {
         System.exit(0);
     }
     // </editor-fold>
+    
     // <editor-fold desc="Atributos" defaultstate="collapsed">
-    private Properties propiedades;
     private final Simulator datos;
     // </editor-fold>
 }
