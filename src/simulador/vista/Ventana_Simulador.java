@@ -52,24 +52,6 @@ public class Ventana_Simulador extends JFrame
     private void ajustarComponentes(Container c) {
         System.out.println("Configurando componentes..");
         ajustarMenus(c);
-    }
-
-    private void ajustarMenus(Container c) {
-        menuPrincipal = new JMenuBar();
-        menuPrincipal.add(menuArchivo = new JMenu("Archivo"));
-        menuArchivo.add(itemGuardar = new JMenuItem("Guardar"));
-        menuArchivo.add(itemRecuperar = new JMenuItem("Recuperar"));
-        menuArchivo.add(new JSeparator());
-        menuArchivo.add(itemLimpiar = new JMenuItem("Limpiar"));
-
-        menuPrincipal.add(menuEstados = new JMenu("Estados"));
-        menuEstados.add(itemInicial = new JMenuItem("Inicial"));
-        menuEstados.add(itemIntermedio = new JMenuItem("Intermedio"));
-        menuEstados.add(itemFinal = new JMenuItem("Final"));
-
-        menuPrincipal.add(menuVerificar = new JMenu("Verificar"));
-        menuVerificar.add(itemHilera = new JMenuItem("Hilera"));
-        setJMenuBar(menuPrincipal);
         // <editor-fold desc="Archivo" defaultstate="collapsed">
         itemRecuperar.addActionListener(new ActionListener() {
             @Override
@@ -96,21 +78,43 @@ public class Ventana_Simulador extends JFrame
         itemInicial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                //llamar al metodo de eliminar la maquina en modelo
+                String nombreInicial = JOptionPane.showInputDialog(
+                        "Nombre de Estado Inicial:");
+                if (nombreInicial != null && !"".equals(nombreInicial)) {
+                    gestorPrincipal.crea_estado(1, nombreInicial);
+                    System.out.println("Creando un estado inicial ventana..");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe asignarle un nombre al nuevo estado.");
+                }
             }
         });
 
         itemIntermedio.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                //llamar al metodo de eliminar la maquina en modelo
+                String nombreIntermedio = JOptionPane.showInputDialog(
+                        "Nombre de Estado Intermedio:");
+                if (nombreIntermedio != null && !"".equals(nombreIntermedio)) {
+                    gestorPrincipal.crea_estado(2, nombreIntermedio);
+                    System.out.println("Creando un estado intermedio ventana..");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe asignarle un nombre al nuevo estado.");
+                }
+
             }
         });
 
         itemFinal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                //llamar al metodo de eliminar la maquina en modelo
+                String nombreFinal = JOptionPane.showInputDialog(
+                        "Nombre de Estado Final:");
+                if (nombreFinal != null && !"".equals(nombreFinal)) {
+                    gestorPrincipal.crea_estado(3, nombreFinal);
+                    System.out.println("Creando un estado final ventana..");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debe asignarle un nombre al nuevo estado.");
+                }
             }
         });
         // </editor-fold>
@@ -118,10 +122,30 @@ public class Ventana_Simulador extends JFrame
         itemHilera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                //llamar al metodo de eliminar la maquina en modelo
+                String hile = JOptionPane.showInputDialog("Hilera:");
+                gestorPrincipal.verificar_hilera(hilera);
+                System.out.println("verificando hilera ventana..");
             }
         });
         // </editor-fold>
+    }
+
+    private void ajustarMenus(Container c) {
+        menuPrincipal = new JMenuBar();
+        menuPrincipal.add(menuArchivo = new JMenu("Archivo"));
+        menuArchivo.add(itemGuardar = new JMenuItem("Guardar"));
+        menuArchivo.add(itemRecuperar = new JMenuItem("Recuperar"));
+        menuArchivo.add(new JSeparator());
+        menuArchivo.add(itemLimpiar = new JMenuItem("Limpiar"));
+
+        menuPrincipal.add(menuEstados = new JMenu("Estados"));
+        menuEstados.add(itemInicial = new JMenuItem("Inicial"));
+        menuEstados.add(itemIntermedio = new JMenuItem("Intermedio"));
+        menuEstados.add(itemFinal = new JMenuItem("Final"));
+
+        menuPrincipal.add(menuVerificar = new JMenu("Verificar"));
+        menuVerificar.add(itemHilera = new JMenuItem("Hilera"));
+        setJMenuBar(menuPrincipal);
     }
 
     public void init() {
@@ -131,7 +155,7 @@ public class Ventana_Simulador extends JFrame
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     // </editor-fold>
@@ -168,10 +192,6 @@ public class Ventana_Simulador extends JFrame
         gestorPrincipal.guardararchivo(ruta_Archivo_save);
     }
 
-    public void pintar() {
-        //metodo para pintar la maquina
-    }
-
     // </editor-fold>
     // <editor-fold desc="Atributos" defaultstate="collapsed" >
     private final Control_Simulator gestorPrincipal;
@@ -192,6 +212,8 @@ public class Ventana_Simulador extends JFrame
 
     private String ruta_Archivo_open;
     private String ruta_Archivo_save;
+    private String nombre_transicion;
+    private String hilera;
 
     private final FileNameExtensionFilter filter
             = new FileNameExtensionFilter(

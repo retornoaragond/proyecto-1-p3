@@ -7,21 +7,18 @@ import java.util.List;
 
 public class Nodo {
     
-    public Nodo(boolean b, String s){
-        
+    public Nodo(int b, String s){  
         name = s;
         this.paths = new LinkedList<>();
-        accept = b;
-        
+        tipo = b;
     }
     
-    public Nodo(String s){
-        this(false, s);
-    }
+//    public Nodo(String s){
+//        this(0, s);
+//    }
     
-    
-    public boolean isAccept(){
-        return accept;
+    public int isAccept(){
+        return tipo;
     }
     
     public void setPaths(Path p){
@@ -32,8 +29,7 @@ public class Nodo {
         return paths;
     }
     
-    
     private final String name;
-    private final boolean accept;
+    private final int tipo;
     private final List<Path> paths;
 }

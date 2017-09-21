@@ -18,38 +18,40 @@ public class Control_Simulator {
         System.out.printf("Registrando observador: %s..%n", obs);
         datos.addObserver(obs);
     }
-
+    
     public void eliminarregistro(Observer obs) {
         System.out.printf("Eliminado observador: %s..%n", obs);
         datos.deleteObserver(obs);
     }
     
-    public void abrirarchivo(String archivo){
+    public void abrirarchivo(String archivo) {
         datos.abrir_archivo(archivo);
     }
     
-    public void guardararchivo(String archivo){
+    public void guardararchivo(String archivo) {
         datos.abrir_archivo(archivo);
     }
     
-    public void limpiar(){
+    public void limpiar() {
         datos.limpiar();
     }
     
-    public void crea_est_Inicial(String var){
-        
-    }
-
-    // </editor-fold>
-    
-    // <editor-fold desc="Métodos" defaultstate="collapsed">
     public void cerrarAplicacion() {
         System.out.println("Finalizando aplicación..");
-
         System.exit(0);
     }
-    // </editor-fold>
     
+    public void crea_estado(int tipo, String nom) {
+        datos.crea_estado(tipo, nom);
+        System.out.println("Creando un estado nuevo Control..");
+    }
+    
+    public void verificar_hilera(String hilera){
+        datos.verificar_hilera(hilera);
+        System.out.println("verificando hilera Control..");
+    }
+    // </editor-fold>
+
     // <editor-fold desc="Atributos" defaultstate="collapsed">
     private final Simulator datos;
     // </editor-fold>
