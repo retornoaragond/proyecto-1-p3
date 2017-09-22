@@ -61,7 +61,9 @@ public class Maquina {
                     enter = true;
                     flag = verificadorR(s, h+1, a.getPathList().get(i).getNodo());
                 }
-                
+                if(flag){
+                    break;
+                }
             }
             if(enter == true){
                 return flag;
