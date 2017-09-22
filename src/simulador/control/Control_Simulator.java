@@ -26,14 +26,17 @@ public class Control_Simulator {
     
     public void abrirarchivo(String archivo) {
         datos.abrir_archivo(archivo);
+        System.out.println("guardando la maquina ventana..");
     }
     
     public void guardararchivo(String archivo) {
-        datos.abrir_archivo(archivo);
+        datos.guardar_archivo(archivo);
+        System.out.println("guardando la maquina ventana..");
     }
     
     public void limpiar() {
         datos.limpiar();
+        System.out.println("limpiando la maquina ventana..");
     }
     
     public void cerrarAplicacion() {

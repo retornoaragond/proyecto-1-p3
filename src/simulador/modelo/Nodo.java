@@ -1,35 +1,27 @@
-
 package simulador.modelo;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import java.util.ArrayList;
 
 public class Nodo {
-    
-    public Nodo(int b, String s){  
-        name = s;
-        this.paths = new LinkedList<>();
-        tipo = b;
+
+    public Nodo(int tipo, String name) {
+        this.name = name;
+        this.paths = new ArrayList<>();
+        this.tipo = tipo;
     }
-    
-//    public Nodo(String s){
-//        this(0, s);
-//    }
-    
-    public int isAccept(){
-        return tipo;
-    }
-    
-    public void setPaths(Path p){
+    public void addPaths(Path p) {
         paths.add(p);
     }
-    
-    public List<Path> getPathList(){
+
+    public ArrayList<Path> getPathList() {
         return paths;
+    }
+    
+    public String getname(){
+        return name;
     }
     
     private final String name;
     private final int tipo;
-    private final List<Path> paths;
+    private final ArrayList<Path> paths;
 }

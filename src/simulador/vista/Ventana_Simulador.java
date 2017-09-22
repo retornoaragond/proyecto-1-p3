@@ -64,6 +64,7 @@ public class Ventana_Simulador extends JFrame
             @Override
             public void actionPerformed(ActionEvent evt) {
                 guardar_proyecto();
+                System.out.println("guardando la maquina ventana..");
             }
         });
 
@@ -71,6 +72,7 @@ public class Ventana_Simulador extends JFrame
             @Override
             public void actionPerformed(ActionEvent evt) {
                 gestorPrincipal.limpiar();
+                System.out.println("limpiando la maquina ventana..");
             }
         });
         // </editor-fold>
