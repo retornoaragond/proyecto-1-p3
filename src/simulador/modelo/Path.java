@@ -26,6 +26,15 @@ public class Path {
         return destiny;
     }
     
+    public boolean isInTag(char c){
+        for(int i = 0; i < tag.length(); i++){
+            if(tag.charAt(i) == c){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private String tag;
     private Nodo destiny;
 }

@@ -27,9 +27,10 @@ public class Simulador {
     }
 
     public static void mostrarInterfaz() {
-        Simulator modelo = new Simulator();
-        Control_Simulator gestorPrincipal = new Control_Simulator(modelo);
-        Ventana_Simulador ventanaPrincipal = new Ventana_Simulador(gestorPrincipal);
+        Ventana_Simulador ventanaPrincipal =
+                new Ventana_Simulador(
+                        new Control_Simulator(
+                                new Simulator()));
         ventanaPrincipal.init();
     }
 }

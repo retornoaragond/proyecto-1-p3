@@ -43,9 +43,35 @@ public class Maquina {
         n.addPaths(transicion);
     }
     
-    public void verificar(String hilera){
-        //validar las entradas concidan con los paths
-        //debe de generear la ventana de aceptacion
+    public boolean verificar(String hilera){ 
+        
+        return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
+        
+    }
+    
+    private boolean verificadorR(char[] s, int h, Nodo a){
+        if(h == s.length){
+            return accept(a);
+        }else{
+            boolean flag = false;
+            boolean enter = false;
+            for(int i = 0; i < a.getPathList().size(); i++){
+                
+                if(a.getPathList().get(i).isInTag(s[h])){
+                    enter = true;
+                    flag = verificadorR(s, h+1, a.getPathList().get(i).getNodo());
+                }
+                
+            }
+            if(enter == true){
+                return flag;
+            }
+            return accept(a);
+        }
+    }
+
+    private boolean accept(Nodo n){
+        return n.getTipo() == 3;
     }
 
     private ArrayList<Nodo> maquina;

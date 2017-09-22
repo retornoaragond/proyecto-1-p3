@@ -1,9 +1,14 @@
 package simulador.vista;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
@@ -14,10 +19,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import simulador.control.Control_Simulator;
+import simulador.modelo.Simulator;
 
 public class Ventana_Simulador extends JFrame
         implements Observer {
@@ -50,6 +57,9 @@ public class Ventana_Simulador extends JFrame
     }
 
     private void ajustarComponentes(Container c) {
+        c.setLayout(new BorderLayout());
+        c.add(BorderLayout.CENTER,
+                panelPrincipal = new PanelMaquina());
         System.out.println("Configurando componentes..");
         ajustarMenus(c);
         // <editor-fold desc="Archivo" defaultstate="collapsed">
@@ -130,6 +140,36 @@ public class Ventana_Simulador extends JFrame
             }
         });
         // </editor-fold>
+        // <editor-fold desc="Mouse" defaultstate="collapsed">
+        panelPrincipal.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {// cuando se esta clickeando el mouse
+
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {// cuando se esta arrastrando el mouse
+                finArrastre = new Point(e.getX(), e.getY());
+                repaint();
+            }
+        });
+
+        panelPrincipal.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) { // cuando se presiona el mouse
+                inicioArrastre = new Point(e.getX(), e.getY());
+                finArrastre = inicioArrastre;
+                repaint();
+            }
+
+            public void mouseReleased(MouseEvent e) { // cuando se deja de presionar el mouse
+
+                inicioArrastre = null;
+                finArrastre = null;
+                repaint();
+            }
+        });
+
+        // </editor-fold>
     }
 
     private void ajustarMenus(Container c) {
@@ -152,12 +192,16 @@ public class Ventana_Simulador extends JFrame
 
     public void init() {
         System.out.println("Inicializando interfaz..");
+        gestorPrincipal.registrar(this);
         setVisible(true);
+
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public void update(Observable obs, Object arg) {
+        PanelMaquina pm = (PanelMaquina) panelPrincipal;
+        pm.definirModelo((Simulator) obs);
+        pm.repaint();
     }
 
     // </editor-fold>
@@ -199,7 +243,7 @@ public class Ventana_Simulador extends JFrame
     private final Control_Simulator gestorPrincipal;
 
     private JMenuBar menuPrincipal;
-
+    private JPanel panelPrincipal;
     private JMenu menuArchivo;
     private JMenu menuEstados;
     private JMenu menuVerificar;
@@ -216,6 +260,9 @@ public class Ventana_Simulador extends JFrame
     private String ruta_Archivo_save;
     private String nombre_transicion;
     private String hilera;
+
+    private Point inicioArrastre;
+    private Point finArrastre;
 
     private final FileNameExtensionFilter filter
             = new FileNameExtensionFilter(
