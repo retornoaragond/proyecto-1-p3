@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -143,28 +142,21 @@ public class Ventana_Simulador extends JFrame
         // <editor-fold desc="Mouse" defaultstate="collapsed">
         panelPrincipal.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {// cuando se esta clickeando el mouse
+            public void mouseClicked(MouseEvent e) {
 
             }
 
             @Override
-            public void mouseDragged(MouseEvent e) {// cuando se esta arrastrando el mouse
-                finArrastre = new Point(e.getX(), e.getY());
-                repaint();
+            public void mousePressed(MouseEvent e) {
+                gestorPrincipal.seleccionar(e.getPoint());
+                System.out.println("selecionado" + e.getPoint().toString());
             }
         });
 
-        panelPrincipal.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) { // cuando se presiona el mouse
-                inicioArrastre = new Point(e.getX(), e.getY());
-                finArrastre = inicioArrastre;
-                repaint();
-            }
-
-            public void mouseReleased(MouseEvent e) { // cuando se deja de presionar el mouse
-
-                inicioArrastre = null;
-                finArrastre = null;
+        panelPrincipal.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                gestorPrincipal.arrastrar(e.getPoint());
                 repaint();
             }
         });

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 
 public class Nodo {
 
@@ -31,17 +32,25 @@ public class Nodo {
     public String getname() {
         return name;
     }
-    public int getTipo(){
+
+    public int getTipo() {
         return tipo;
     }
 
-    public Point obtenerPosicion() {
+    public Point obtPos() {
         return loc;
+    }
+
+    public int getradio() {
+        return r;
+    }
+
+    public void setobtPos(Point p) {
+        loc = p;
     }
 
     public void dibujar(Graphics2D g) {
         FontMetrics fm = g.getFontMetrics();
-        int r = 20;
         if (tipo == 1) {
             g.setColor(new Color(0, 60, 255));
         } else {
@@ -51,9 +60,11 @@ public class Nodo {
                 g.setColor(new Color(255, 0, 0));
             }
         }
-        g.fillOval(loc.x - r, loc.y - r, 2*r, 2*r);
+        Ellipse2D el = new Ellipse2D.Double(loc.x - r, loc.y - r, 2 * r, 2 * r);
+        g.fill(el);
         g.setColor(Color.BLACK);
-        g.drawOval(loc.x - r, loc.y - r, 2 * r, 2 * r);
+        Ellipse2D e2 = new Ellipse2D.Double(loc.x - r, loc.y - r, 2 * r, 2 * r);
+        g.draw(e2);
         g.setColor(Color.BLACK);
         g.setFont(TIPO_BASE);
         g.drawString(
@@ -69,4 +80,5 @@ public class Nodo {
     private final int tipo;
     private final ArrayList<Path> paths;
     private Point loc;
+    private int r = 20;
 }

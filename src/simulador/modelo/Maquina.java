@@ -37,42 +37,42 @@ public class Maquina {
         maquina.add(n);
         System.out.println("Se agrego un estado a la maquina");
     }
-    
-    public void agregar_path(Nodo n,String tag,Nodo next){
+
+    public void agregar_path(Nodo n, String tag, Nodo next) {
         Path transicion = new Path(tag, next);
         n.addPaths(transicion);
     }
-    
-    public boolean verificar(String hilera){ 
-        
+
+    public boolean verificar(String hilera) {
+
         return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
-        
+
     }
-    
-    private boolean verificadorR(char[] s, int h, Nodo a){
-        if(h == s.length){
+
+    private boolean verificadorR(char[] s, int h, Nodo a) {
+        if (h == s.length) {
             return accept(a);
-        }else{
+        } else {
             boolean flag = false;
             boolean enter = false;
-            for(int i = 0; i < a.getPathList().size(); i++){
-                
-                if(a.getPathList().get(i).isInTag(s[h])){
+            for (int i = 0; i < a.getPathList().size(); i++) {
+
+                if (a.getPathList().get(i).isInTag(s[h])) {
                     enter = true;
-                    flag = verificadorR(s, h+1, a.getPathList().get(i).getNodo());
+                    flag = verificadorR(s, h + 1, a.getPathList().get(i).getNodo());
                 }
-                if(flag){
+                if (flag) {
                     break;
                 }
             }
-            if(enter == true){
+            if (enter == true) {
                 return flag;
             }
             return accept(a);
         }
     }
 
-    private boolean accept(Nodo n){
+    private boolean accept(Nodo n) {
         return n.getTipo() == 3;
     }
 
@@ -80,3 +80,4 @@ public class Maquina {
     private final ArrayList<Nodo> apuntadores;
 
 }
+
