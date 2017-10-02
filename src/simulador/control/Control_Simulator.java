@@ -66,6 +66,35 @@ public class Control_Simulator {
     public void arrastrar(Point p) {
         datos.arrastrar(p);
     }
+    
+    public void desseleccionar() {
+        datos.deseleccionar();
+    }
+    
+    public void selorigen(Point p) {
+        datos.selorigen(p);
+    }
+
+    public void desselorigen() {
+        datos.deselorigen();
+    }
+
+    public void seldest(Point p) {
+        datos.seldest(p);
+    }
+
+    public void desdest() {
+        datos.desdest();
+    }
+
+    public void predest(Point p) {
+        datos.predest(p);
+    }
+    
+    public void agregarArista() {
+        datos.agregarArista();
+    }
+    
     // </editor-fold>
 
     // <editor-fold desc="Atributos" defaultstate="collapsed">

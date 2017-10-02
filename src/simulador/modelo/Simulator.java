@@ -1,5 +1,7 @@
 package simulador.modelo;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
@@ -7,6 +9,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -69,9 +72,17 @@ public class Simulator extends Observable {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
+        if (origen != -1) {
+            lineaprevia(g);
+        }
         for (Nodo n : maquina.get_maquina()) {
+
+            for (Path a : n.getPathList()) {
+                a.dibujar(g, n.obtPos());
+            }
+            g.setStroke(new BasicStroke(2.0f));
             n.dibujar(g);
+
         }
     }
 
@@ -109,10 +120,63 @@ public class Simulator extends Observable {
         notifyObservers();
     }
 
+    public void lineaprevia(Graphics2D g) {
+        g.setColor(Color.GRAY);
+        float grosor = 2;
+        float[] style = {10, 5};
+        g.setColor(Color.RED);
+        g.setStroke(new BasicStroke(grosor, BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_MITER, 10.0f, style, 0));
+        g.drawLine(
+                maquina.get_maquina().get(origen).obtPos().x,
+                maquina.get_maquina().get(origen).obtPos().y,
+                predest.x, predest.y);
+    }
+
+    public void predest(Point p) {
+        predest = p;
+        setChanged();
+        notifyObservers();
+    }
+
+    public void agregarArista() {
+        if (destino != -1) {
+            String tag = JOptionPane.showInputDialog(
+                    "tag:");
+            maquina.get_maquina().get(origen).addPaths(
+                    new Path(tag, maquina.get_maquina().get(destino)));
+        }
+        setChanged();
+        notifyObservers();
+    }
+
+    public void selorigen(Point p) {
+        origen = find(p);
+    }
+
+    public void seldest(Point p) {
+        destino = find(p);
+    }
+
+    public void desdest() {
+        destino = -1;
+    }
+
+    public void deselorigen() {
+        origen = -1;
+    }
+
+    public void deseleccionar() {
+        seleccionada = -1;
+    }
+
     // </editor-fold>
     // <editor-fold desc="Atributos" defaultstate="collapsed">
     private final Maquina maquina;
-    private int seleccionada;
+    private int seleccionada = -1;
+    private int origen = -1;
+    private int destino = -1;
+    Point predest;
     // </editor-fold>
 
 }

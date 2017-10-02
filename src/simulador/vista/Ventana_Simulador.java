@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import static java.awt.event.MouseEvent.BUTTON1;
+import static java.awt.event.MouseEvent.BUTTON3;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
@@ -141,23 +143,54 @@ public class Ventana_Simulador extends JFrame
         // </editor-fold>
         // <editor-fold desc="Mouse" defaultstate="collapsed">
         panelPrincipal.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                gestorPrincipal.seleccionar(e.getPoint());
-                System.out.println("selecionado" + e.getPoint().toString());
+                if (e.getButton() == BUTTON1) {
+                    gestorPrincipal.seleccionar(e.getPoint());
+                    System.out.printf("selecionado [%d,%d]\n",
+                            e.getPoint().x, e.getPoint().y);
+                } else {
+                    if (e.getButton() == BUTTON3)
+                    gestorPrincipal.selorigen(e.getPoint());
+                    System.out.printf("origen [%d,%d]\n",
+                            e.getPoint().x, e.getPoint().y);
+                }
             }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == BUTTON1) {
+                    gestorPrincipal.desseleccionar();
+                    System.out.printf("deseleccionado [%d,%d]\n",
+                            e.getPoint().x, e.getPoint().y);
+                } else {
+                    gestorPrincipal.seldest(e.getPoint());
+                    gestorPrincipal.agregarArista();
+
+                    System.out.printf("delineado [%d,%d]\n",
+                            e.getPoint().x, e.getPoint().y);
+                    gestorPrincipal.desselorigen();
+                    System.out.println("reset origen");
+                    gestorPrincipal.desdest();
+                    System.out.println("reset destino");
+                    repaint();
+                }
+            }
+            
+            
         });
 
         panelPrincipal.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                gestorPrincipal.arrastrar(e.getPoint());
-                repaint();
+                if (e.isShiftDown()) {
+                    gestorPrincipal.arrastrar(e.getPoint());
+                } else {
+                        gestorPrincipal.predest(e.getPoint());
+                        System.out.printf("delineado mover [%d,%d]\n",
+                                e.getPoint().x, e.getPoint().y);
+                }
             }
         });
 
