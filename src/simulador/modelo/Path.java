@@ -10,16 +10,16 @@ import java.awt.Point;
 
 public class Path {
     
-    public Path(String s, Nodo d){
+    public Path(String s, int d){
         this.tag = s;
         this.destino = d;
     }
     
     public Path(String s){
-        this(s, null);
+        this(s, -1);
     }
 
-    public void setDestiny(Nodo n){
+    public void setDestiny(int n){
         this.destino = n;
     }
     
@@ -27,7 +27,7 @@ public class Path {
         return tag;
     }
     
-    public Nodo getNodo(){
+    public int getDestiny(){
         return destino;
     }
     
@@ -177,5 +177,5 @@ public class Path {
     double destinoRY;
     
     private String tag;
-    private Nodo destino;
+    private int destino;
 }

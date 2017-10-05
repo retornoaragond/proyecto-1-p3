@@ -39,7 +39,7 @@ public class Maquina {
     }
 
     public void agregar_path(Nodo n, String tag, Nodo next) {
-        Path transicion = new Path(tag, next);
+        Path transicion = new Path(tag, searchNext(next));
         n.addPaths(transicion);
     }
 
@@ -47,6 +47,16 @@ public class Maquina {
 
         return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
 
+    }
+    
+    public int searchNext(Nodo n){
+        int i;
+        for( i = 0; i < maquina.size(); i++){
+            if(maquina.get(i).equals(n)){
+                break;
+            }
+        }
+        return i;
     }
 
     private boolean verificadorR(char[] s, int h, Nodo a) {
@@ -59,7 +69,7 @@ public class Maquina {
 
                 if (a.getPathList().get(i).isInTag(s[h])) {
                     enter = true;
-                    flag = verificadorR(s, h + 1, a.getPathList().get(i).getNodo());
+                    flag = verificadorR(s, h + 1, maquina.get(a.getPathList().get(i).getDestiny()));
                 }
                 if (flag) {
                     break;
