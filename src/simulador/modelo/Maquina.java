@@ -31,8 +31,8 @@ public class Maquina {
     }
 
     public void agregar_estado(int tipo, String nom) {
+        Nodo n = new Nodo(tipo, nom);
         if (!estinicio) {
-            Nodo n = new Nodo(tipo, nom);
             if (tipo == 1) {
                 estinicio = true;
                 Nodo apuntador = n;
@@ -41,8 +41,13 @@ public class Maquina {
             maquina.add(n);
             System.out.println("Se agrego un estado a la maquina");
         } else {
-            JOptionPane.showMessageDialog(null,
-                     "No puede haber mas de un estado inicial.");
+            if (tipo == 1) {
+                JOptionPane.showMessageDialog(null,
+                        "No puede haber mas de un estado inicial.");
+            } else {
+                maquina.add(n);
+                System.out.println("Se agrego un estado a la maquina");
+            }
         }
     }
 
@@ -52,11 +57,11 @@ public class Maquina {
     }
 
     public boolean verificar(String hilera) {
-        if (estinicio){
-        return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
-        }else{
+        if (estinicio) {
+            return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
+        } else {
             JOptionPane.showMessageDialog(null,
-                     "Debe existir un estado inicial almenos.");
+                    "Debe existir un estado inicial almenos.");
             return false;
         }
 
