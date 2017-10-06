@@ -64,7 +64,14 @@ public class Simulator extends Observable {
     }
 
     public void verificar_hilera(String hilera) {
-        maquina.verificar(hilera);
+        System.out.printf("hilera %s", hilera);
+        if (maquina.verificar(hilera)) {
+            String m = "Hilera Aceptada: " + hilera;
+            JOptionPane.showMessageDialog(null, m);
+        } else {
+            String m = "Hilera No Aceptada: " + hilera;
+            JOptionPane.showMessageDialog(null, m);
+        }
         System.out.println("verificando hilera modelo..");
     }
 

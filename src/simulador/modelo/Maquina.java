@@ -2,12 +2,14 @@ package simulador.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class Maquina {
 
     public Maquina() {
         maquina = new ArrayList<>();
         apuntadores = new ArrayList<>();
+        estinicio = false;
     }
 
     public List<Nodo> get_maquina() {
@@ -29,13 +31,19 @@ public class Maquina {
     }
 
     public void agregar_estado(int tipo, String nom) {
-        Nodo n = new Nodo(tipo, nom);
-        if (tipo == 1) {
-            Nodo apuntador = n;
-            apuntadores.add(apuntador);
+        if (!estinicio) {
+            Nodo n = new Nodo(tipo, nom);
+            if (tipo == 1) {
+                estinicio = true;
+                Nodo apuntador = n;
+                apuntadores.add(apuntador);
+            }
+            maquina.add(n);
+            System.out.println("Se agrego un estado a la maquina");
+        } else {
+            JOptionPane.showMessageDialog(null,
+                     "No puede haber mas de un estado inicial.");
         }
-        maquina.add(n);
-        System.out.println("Se agrego un estado a la maquina");
     }
 
     public void agregar_path(Nodo n, String tag, Nodo next) {
@@ -44,15 +52,20 @@ public class Maquina {
     }
 
     public boolean verificar(String hilera) {
-
+        if (estinicio){
         return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
+        }else{
+            JOptionPane.showMessageDialog(null,
+                     "Debe existir un estado inicial almenos.");
+            return false;
+        }
 
     }
-    
-    public int searchNext(Nodo n){
+
+    public int searchNext(Nodo n) {
         int i;
-        for( i = 0; i < maquina.size(); i++){
-            if(maquina.get(i).equals(n)){
+        for (i = 0; i < maquina.size(); i++) {
+            if (maquina.get(i).equals(n)) {
                 break;
             }
         }
@@ -88,6 +101,6 @@ public class Maquina {
 
     private ArrayList<Nodo> maquina;
     private final ArrayList<Nodo> apuntadores;
+    private boolean estinicio;
 
 }
-

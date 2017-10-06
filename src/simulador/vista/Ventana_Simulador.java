@@ -135,9 +135,14 @@ public class Ventana_Simulador extends JFrame
         itemHilera.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                String hile = JOptionPane.showInputDialog("Hilera:");
-                gestorPrincipal.verificar_hilera(hilera);
-                System.out.println("verificando hilera ventana..");
+                hilera = JOptionPane.showInputDialog("Hilera:");
+                if (!"".equals(hilera)) {
+                    gestorPrincipal.verificar_hilera(hilera);
+                    System.out.println("verificando hilera ventana..");
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Para probar una hilera debe ingresar algo para ser provado");
+                }
             }
         });
         // </editor-fold>
@@ -151,8 +156,9 @@ public class Ventana_Simulador extends JFrame
                     System.out.printf("selecionado [%d,%d]\n",
                             e.getPoint().x, e.getPoint().y);
                 } else {
-                    if (e.getButton() == BUTTON3)
-                    gestorPrincipal.selorigen(e.getPoint());
+                    if (e.getButton() == BUTTON3) {
+                        gestorPrincipal.selorigen(e.getPoint());
+                    }
                     System.out.printf("origen [%d,%d]\n",
                             e.getPoint().x, e.getPoint().y);
                 }
@@ -177,8 +183,7 @@ public class Ventana_Simulador extends JFrame
                     repaint();
                 }
             }
-            
-            
+
         });
 
         panelPrincipal.addMouseMotionListener(new MouseAdapter() {
@@ -187,9 +192,9 @@ public class Ventana_Simulador extends JFrame
                 if (e.isShiftDown()) {
                     gestorPrincipal.arrastrar(e.getPoint());
                 } else {
-                        gestorPrincipal.predest(e.getPoint());
-                        System.out.printf("delineado mover [%d,%d]\n",
-                                e.getPoint().x, e.getPoint().y);
+                    gestorPrincipal.predest(e.getPoint());
+                    System.out.printf("delineado mover [%d,%d]\n",
+                            e.getPoint().x, e.getPoint().y);
                 }
             }
         });
