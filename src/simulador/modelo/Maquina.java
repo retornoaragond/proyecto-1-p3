@@ -14,7 +14,7 @@ public class Maquina {
         return maquina;
     }
 
-    public List<Nodo> get_apuntadores() {
+    public ArrayList<Nodo> get_apuntadores() {
         return apuntadores;
     }
 

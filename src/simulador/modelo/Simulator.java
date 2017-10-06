@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,7 +79,7 @@ public class Simulator extends Observable {
         for (Nodo n : maquina.get_maquina()) {
 
             for (Path a : n.getPathList()) {
-                a.dibujar(g, n.obtPos());
+                a.dibujar(g, n.obtPos(), (ArrayList<Nodo>) maquina.get_maquina());
             }
             g.setStroke(new BasicStroke(2.0f));
             n.dibujar(g);
@@ -144,7 +145,7 @@ public class Simulator extends Observable {
             String tag = JOptionPane.showInputDialog(
                     "tag:");
             maquina.get_maquina().get(origen).addPaths(
-                    new Path(tag, maquina.get_maquina().get(destino)));
+                    new Path(tag, destino));
         }
         setChanged();
         notifyObservers();

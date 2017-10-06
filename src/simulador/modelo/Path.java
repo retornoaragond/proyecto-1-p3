@@ -5,6 +5,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
 
 
@@ -12,7 +13,7 @@ public class Path {
     
     public Path(String s, int d){
         this.tag = s;
-        this.destino = d;
+        this.destinoi = d;
     }
     
     public Path(String s){
@@ -20,7 +21,7 @@ public class Path {
     }
 
     public void setDestiny(int n){
-        this.destino = n;
+        this.destinoi = n;
     }
     
     public String getTag(){
@@ -28,7 +29,7 @@ public class Path {
     }
     
     public int getDestiny(){
-        return destino;
+        return destinoi;
     }
     
     public boolean isInTag(char c){
@@ -39,9 +40,11 @@ public class Path {
         }
         return false;
     }
-    public void dibujar( Graphics2D g ,Point p) {
+    public void dibujar(Graphics2D g, Point p,ArrayList<Nodo> l) {
+        Nodo destino =  find(l);
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(2.0f));
+        
         if (p.x == destino.obtPos().x && destino.obtPos().y == p.y) {
             int[] xPoints = {
                 destino.obtPos().x,
@@ -75,8 +78,8 @@ public class Path {
         } else {
             if ((p.x == destino.obtPos().x && destino.obtPos().y != p.y)) {
                 if (destino.obtPos().y > p.y) {
-                    g.fillOval(destino.obtPos().x-4,
-                            destino.obtPos().y - destino.getradio()-4, 8, 8);
+                    g.fillOval(destino.obtPos().x - 4,
+                            destino.obtPos().y - destino.getradio() - 4, 8, 8);
 //                    g.drawLine(
 //                            destino.obtPos().x,
 //                            destino.obtPos().y - destino.getradio() - 1,
@@ -90,7 +93,7 @@ public class Path {
                             - destino.getradio());
 
                 } else {
-                    g.fillOval(destino.obtPos().x-4, destino.obtPos().y + destino.getradio()-4, 8, 8);
+                    g.fillOval(destino.obtPos().x - 4, destino.obtPos().y + destino.getradio() - 4, 8, 8);
 //                    g.drawLine(destino.obtPos().x,
 //                            destino.obtPos().y + destino.getradio() + 1,
 //                            destino.obtPos().x - 5,
@@ -105,7 +108,7 @@ public class Path {
             } else {
                 if (p.x != destino.obtPos().x && destino.obtPos().y == p.y) {
                     if (destino.obtPos().x > p.x) {
-                        g.fillOval(destino.obtPos().x - destino.getradio()-4, destino.obtPos().y-4, 8, 8);
+                        g.fillOval(destino.obtPos().x - destino.getradio() - 4, destino.obtPos().y - 4, 8, 8);
 //                        g.drawLine(destino.obtPos().x - destino.getradio(),
 //                                destino.obtPos().y,
 //                                destino.obtPos().x - destino.getradio() - 7,
@@ -117,7 +120,7 @@ public class Path {
                         g.drawLine(p.x, p.y, destino.obtPos().x - destino.getradio(),
                                 destino.obtPos().y);
                     } else {
-                        g.fillOval(destino.obtPos().x + destino.getradio() -4, destino.obtPos().y - 4, 8, 8);
+                        g.fillOval(destino.obtPos().x + destino.getradio() - 4, destino.obtPos().y - 4, 8, 8);
 //                        g.drawLine(destino.obtPos().x + destino.getradio(),
 //                                destino.obtPos().y,
 //                                destino.obtPos().x + destino.getradio() + 7,
@@ -173,9 +176,13 @@ public class Path {
             }
         }
     }
+    
+    public Nodo find(ArrayList<Nodo> p) {
+          return p.get(destinoi);
+    }
     double destinoRX;
     double destinoRY;
     
     private String tag;
-    private int destino;
+    private int destinoi;
 }
