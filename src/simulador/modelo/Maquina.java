@@ -28,6 +28,7 @@ public class Maquina {
         System.out.println("Eliminando la maquina");
         maquina.removeAll(maquina);
         apuntadores.removeAll(apuntadores);
+        estinicio = false;
     }
 
     public void agregar_estado(int tipo, String nom) {
