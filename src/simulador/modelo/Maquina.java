@@ -3,31 +3,42 @@ package simulador.modelo;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement(name = "Maquina-Estados")
+@XmlType(propOrder = {"estinicio", "maquina"})
 public class Maquina {
 
     public Maquina() {
         maquina = new ArrayList<>();
-        apuntadores = new ArrayList<>();
         estinicio = false;
     }
-
-    public List<Nodo> get_maquina() {
+    
+    @XmlElementWrapper(name = "maquina")
+    @XmlElement(name = "nodo")
+    public List<Nodo> getMaquina() {
         return maquina;
     }
-
-    public ArrayList<Nodo> get_apuntadores() {
-        return apuntadores;
-    }
-
-    public void set_maquina(ArrayList<Nodo> maquina) {
+    
+    public void setMaquina(ArrayList<Nodo> maquina) {
         this.maquina = maquina;
+    }
+    
+    @XmlElement(name = "inicial")
+    public boolean getEstinicio() {
+        return estinicio;
+    }
+    
+    public void setEstinicio(boolean e) {
+        estinicio = e;
     }
 
     public void limpiar() {
         System.out.println("Eliminando la maquina");
         maquina.removeAll(maquina);
-        apuntadores.removeAll(apuntadores);
         estinicio = false;
     }
 
@@ -37,7 +48,6 @@ public class Maquina {
             if (tipo == 1) {
                 estinicio = true;
                 Nodo apuntador = n;
-                apuntadores.add(apuntador);
             }
             maquina.add(n);
             System.out.println("Se agrego un estado a la maquina");
@@ -65,7 +75,6 @@ public class Maquina {
                     "Debe existir un estado inicial almenos.");
             return false;
         }
-
     }
 
     public int searchNext(Nodo n) {
@@ -84,11 +93,11 @@ public class Maquina {
         } else {
             boolean flag = false;
             boolean enter = false;
-            for (int i = 0; i < a.getPathList().size(); i++) {
+            for (int i = 0; i < a.getpaths().size(); i++) {
 
-                if (a.getPathList().get(i).isInTag(s[h])) {
+                if (a.getpaths().get(i).isInTag(s[h])) {
                     enter = true;
-                    flag = verificadorR(s, h + 1, maquina.get(a.getPathList().get(i).getDestiny()));
+                    flag = verificadorR(s, h + 1, maquina.get(a.getpaths().get(i).getdestiny()));
                 }
                 if (flag) {
                     break;
@@ -102,11 +111,10 @@ public class Maquina {
     }
 
     private boolean accept(Nodo n) {
-        return n.getTipo() == 3;
+        return n.gettipo() == 3;
     }
 
     private ArrayList<Nodo> maquina;
-    private final ArrayList<Nodo> apuntadores;
     private boolean estinicio;
 
 }

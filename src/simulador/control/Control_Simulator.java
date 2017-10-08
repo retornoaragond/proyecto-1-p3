@@ -1,7 +1,12 @@
 package simulador.control;
 
 import java.awt.Point;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 import simulador.modelo.Simulator;
 
 public class Control_Simulator {
@@ -29,12 +34,16 @@ public class Control_Simulator {
         datos.deleteObserver(obs);
     }
 
-    public void abrirarchivo(String archivo) {
-        datos.abrir_archivo(archivo);
-        System.out.println("guardando la maquina ventana..");
+    public void abrirarchivo(String archivo){
+        try {
+            datos.abrir_archivo(archivo);
+            System.out.println("guardando la maquina ventana..");
+        } catch (JAXBException ex) {
+            Logger.getLogger(Control_Simulator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void guardararchivo(String archivo) {
+    public void guardararchivo(String archivo){
         datos.guardar_archivo(archivo);
         System.out.println("guardando la maquina ventana..");
     }

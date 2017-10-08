@@ -12,8 +12,12 @@ import static java.awt.event.MouseEvent.BUTTON1;
 import static java.awt.event.MouseEvent.BUTTON3;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.JAXBException;
 import simulador.control.Control_Simulator;
 import simulador.modelo.Simulator;
 
@@ -76,6 +81,7 @@ public class Ventana_Simulador extends JFrame
             public void actionPerformed(ActionEvent evt) {
                 guardar_proyecto();
                 System.out.println("guardando la maquina ventana..");
+                
             }
         });
 
@@ -257,12 +263,11 @@ public class Ventana_Simulador extends JFrame
         gestorPrincipal.abrirarchivo(ruta_Archivo_open);
     }
 
-    public void guardar_proyecto() {
+    public void guardar_proyecto(){
         JFileChooser file_open = new JFileChooser();
         file_open.setFileFilter(filter);
         int opcion = file_open.showSaveDialog(this);
         if (opcion == JFileChooser.APPROVE_OPTION) {
-
             ruta_Archivo_save = file_open.getSelectedFile().toString();
         }
         gestorPrincipal.guardararchivo(ruta_Archivo_save);

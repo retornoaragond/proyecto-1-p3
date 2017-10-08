@@ -7,46 +7,75 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement(name = "nodo")
+@XmlType(propOrder = {"name", "tipo", "pos", "radio", "paths"})
 public class Nodo {
-
+private Nodo() {
+    }
     public Nodo(int tipo, String name) {
         this.name = name;
         this.paths = new ArrayList<>();
         this.tipo = tipo;
-        this.loc = new Point(25, 25);
+        this.pos = new Point(25, 25);
+        this.radio = 20;
     }
+
+    
 
     public void addPaths(Path p) {
         paths.add(p);
     }
 
-    public void setPoin(Point p) {
-        loc = p;
+    @XmlElement(name = "Pos")
+    public Point getPos() {
+        return pos;
     }
 
-    public ArrayList<Path> getPathList() {
+    public void setPos(Point p) {
+        pos = p;
+    }
+
+    @XmlElementWrapper(name = "listPaths")
+    @XmlElement(name = "path")
+    public ArrayList<Path> getpaths() {
         return paths;
     }
 
+    public void setpaths(ArrayList<Path> p) {
+        this.paths = p;
+    }
+
+    @XmlAttribute(name = "nombre")
     public String getname() {
         return name;
     }
 
-    public int getTipo() {
+    public void setname(String n) {
+        this.name = n;
+    }
+
+    @XmlElement(name = "tipo")
+    public int gettipo() {
         return tipo;
     }
 
-    public Point obtPos() {
-        return loc;
+    public void settipo(int t) {
+        this.tipo = t;
     }
 
+    @XmlElement(name = "radio")
     public int getradio() {
-        return r;
+        return radio;
     }
 
-    public void setobtPos(Point p) {
-        loc = p;
+    public void setradio(int r) {
+        this.radio = r;
     }
 
     public void dibujar(Graphics2D g) {
@@ -60,25 +89,25 @@ public class Nodo {
                 g.setColor(new Color(255, 0, 0));
             }
         }
-        Ellipse2D el = new Ellipse2D.Double(loc.x - r, loc.y - r, 2 * r, 2 * r);
+        Ellipse2D el = new Ellipse2D.Double(pos.x - radio, pos.y - radio, 2 * radio, 2 * radio);
         g.fill(el);
         g.setColor(Color.BLACK);
-        Ellipse2D e2 = new Ellipse2D.Double(loc.x - r, loc.y - r, 2 * r, 2 * r);
+        Ellipse2D e2 = new Ellipse2D.Double(pos.x - radio, pos.y - radio, 2 * radio, 2 * radio);
         g.draw(e2);
         g.setColor(Color.BLACK);
         g.setFont(TIPO_BASE);
         g.drawString(
                 name,
-                loc.x - fm.stringWidth(name) / 2 - 1,
-                loc.y + fm.getAscent() / 2);
+                pos.x - fm.stringWidth(name) / 2 - 1,
+                pos.y + fm.getAscent() / 2);
     }
 
     private static final Font TIPO_BASE
             = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
 
-    private final String name;
-    private final int tipo;
-    private final ArrayList<Path> paths;
-    private Point loc;
-    private int r = 20;
+    private String name;
+    private int tipo;
+    private ArrayList<Path> paths;
+    private Point pos;
+    private int radio;
 }

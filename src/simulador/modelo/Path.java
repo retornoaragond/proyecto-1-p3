@@ -6,28 +6,40 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement(name = "path")
+@XmlType(propOrder = {"tag", "destiny"})
 public class Path {
 
     public Path(String s, int d) {
         this.tag = s;
-        this.destinoi = d;
+        this.destiny = d;
     }
 
-    public Path(String s) {
-        this(s, -1);
+    public Path() {
     }
 
-    public void setDestiny(int n) {
-        this.destinoi = n;
+    @XmlElement(name = "destiny")
+    public int getdestiny() {
+        return destiny;
     }
 
-    public String getTag() {
+
+    public void setdestiny(int n) {
+        this.destiny = n;
+    }
+
+    @XmlAttribute(name = "tag")
+    public String gettag() {
         return tag;
     }
 
-    public int getDestiny() {
-        return destinoi;
+    public void settag(String t) {
+        this.tag = t;
     }
 
     public boolean isInTag(char c) {
@@ -45,13 +57,13 @@ public class Path {
         g.setFont(TIPO_BASE);
         g.setStroke(new BasicStroke(2.0f));
 
-        if (p.x == destino.obtPos().x && destino.obtPos().y == p.y) {
+        if (p.x == destino.getPos().x && destino.getPos().y == p.y) {
             dibujaciclo(g, p, destino);
         } else {
-            if ((p.x == destino.obtPos().x && destino.obtPos().y != p.y)) {
+            if ((p.x == destino.getPos().x && destino.getPos().y != p.y)) {
                 dibujavertical(g, p, destino);
             } else {
-                if (p.x != destino.obtPos().x && destino.obtPos().y == p.y) {
+                if (p.x != destino.getPos().x && destino.getPos().y == p.y) {
                     dibujahorizaontal(g, p, destino);
                 } else {
                     dibujadiagonales(g, p, destino);
@@ -62,19 +74,19 @@ public class Path {
 
     public void dibujaciclo(Graphics2D g, Point p, Nodo destino) {
         int[] xPoints = {
-            destino.obtPos().x,
-            destino.obtPos().x + destino.getradio() + 10,
-            destino.obtPos().x + destino.getradio() + 10,
-            destino.obtPos().x,
-            destino.obtPos().x,};
+            destino.getPos().x,
+            destino.getPos().x + destino.getradio() + 10,
+            destino.getPos().x + destino.getradio() + 10,
+            destino.getPos().x,
+            destino.getPos().x,};
         int[] yPoints = {
-            destino.obtPos().y - destino.getradio() / 2,
-            destino.obtPos().y - destino.getradio() / 2,
-            destino.obtPos().y - destino.getradio() - 10
+            destino.getPos().y - destino.getradio() / 2,
+            destino.getPos().y - destino.getradio() / 2,
+            destino.getPos().y - destino.getradio() - 10
             - (destino.getradio() / 2),
-            destino.obtPos().y - destino.getradio() - 10
+            destino.getPos().y - destino.getradio() - 10
             - destino.getradio() / 2,
-            destino.obtPos().y - destino.getradio() - 2};
+            destino.getPos().y - destino.getradio() - 2};
         g.setStroke(new BasicStroke(2.0f));
         g.drawPolyline(xPoints, yPoints, 5);
         g.drawString(
@@ -87,77 +99,77 @@ public class Path {
     }
 
     public void dibujavertical(Graphics2D g, Point p, Nodo destino) {
-        if (destino.obtPos().y > p.y) {
-            g.drawLine(p.x, p.y, destino.obtPos().x, destino.obtPos().y
+        if (destino.getPos().y > p.y) {
+            g.drawLine(p.x, p.y, destino.getPos().x, destino.getPos().y
                     - destino.getradio());
             g.drawString(
                     String.format("%s", tag),
-                    destino.obtPos().x + 10,
-                    destino.obtPos().y - destino.getradio()
-                    - ((destino.obtPos().y - destino.getradio() - p.y)
+                    destino.getPos().x + 10,
+                    destino.getPos().y - destino.getradio()
+                    - ((destino.getPos().y - destino.getradio() - p.y)
                     / 2) + g.getFontMetrics().getAscent() / 2
             );
-            Point aux = new Point(destino.obtPos().x,
-                    destino.obtPos().y - destino.getradio());
+            Point aux = new Point(destino.getPos().x,
+                    destino.getPos().y - destino.getradio());
             dibujarFlecha(p, aux, g);
         } else {
-            g.drawLine(p.x, p.y, destino.obtPos().x, destino.obtPos().y
+            g.drawLine(p.x, p.y, destino.getPos().x, destino.getPos().y
                     + destino.getradio());
             g.drawString(
                     String.format("%s", tag),
-                    destino.obtPos().x + 10,
-                    destino.obtPos().y + destino.getradio()
-                    + ((p.y - destino.obtPos().y - destino.getradio())
+                    destino.getPos().x + 10,
+                    destino.getPos().y + destino.getradio()
+                    + ((p.y - destino.getPos().y - destino.getradio())
                     / 2) + g.getFontMetrics().getAscent() / 2
             );
-            Point aux = new Point(destino.obtPos().x,
-                    destino.obtPos().y + destino.getradio());
+            Point aux = new Point(destino.getPos().x,
+                    destino.getPos().y + destino.getradio());
             dibujarFlecha(p, aux, g);
         }
     }
 
     public void dibujahorizaontal(Graphics2D g, Point p, Nodo destino) {
-        if (destino.obtPos().x > p.x) {
-            g.drawLine(p.x, p.y, destino.obtPos().x - destino.getradio(),
-                    destino.obtPos().y);
+        if (destino.getPos().x > p.x) {
+            g.drawLine(p.x, p.y, destino.getPos().x - destino.getradio(),
+                    destino.getPos().y);
             g.drawString(
-                    String.format("%s", tag), p.x + ((destino.obtPos().x
+                    String.format("%s", tag), p.x + ((destino.getPos().x
                     - destino.getradio() - p.x) / 2),
-                    (destino.obtPos().y - g.getFontMetrics().getAscent() / 2)
+                    (destino.getPos().y - g.getFontMetrics().getAscent() / 2)
                     - 10);
-            Point aux = new Point(destino.obtPos().x - destino.getradio(),
-                    destino.obtPos().y);
+            Point aux = new Point(destino.getPos().x - destino.getradio(),
+                    destino.getPos().y);
             dibujarFlecha(p, aux, g);
         } else {
-            g.drawLine(p.x, p.y, destino.obtPos().x + destino.getradio(),
-                    destino.obtPos().y);
+            g.drawLine(p.x, p.y, destino.getPos().x + destino.getradio(),
+                    destino.getPos().y);
             g.drawString(
-                    String.format("%s", tag), p.x - ((p.x - destino.obtPos().x
-                    - destino.getradio()) / 2), (destino.obtPos().y
+                    String.format("%s", tag), p.x - ((p.x - destino.getPos().x
+                    - destino.getradio()) / 2), (destino.getPos().y
                     - g.getFontMetrics().getAscent() / 2) - 10
             );
-            Point aux = new Point(destino.obtPos().x + destino.getradio(),
-                    destino.obtPos().y);
+            Point aux = new Point(destino.getPos().x + destino.getradio(),
+                    destino.getPos().y);
             dibujarFlecha(p, aux, g);
         }
 
     }
 
     public void dibujadiagonales(Graphics2D g, Point p, Nodo destino) {
-        double d = Math.sqrt(Math.pow((destino.obtPos().x - p.x), 2)
-                + Math.pow((destino.obtPos().y - p.y), 2));
-        double c = (destino.obtPos().y - p.y) / d;
+        double d = Math.sqrt(Math.pow((destino.getPos().x - p.x), 2)
+                + Math.pow((destino.getPos().y - p.y), 2));
+        double c = (destino.getPos().y - p.y) / d;
         System.out.println("angulo " + c);
-        if (destino.obtPos().x > p.x && destino.obtPos().y > p.y) {
+        if (destino.getPos().x > p.x && destino.getPos().y > p.y) {
             diagonal_1(g, p, destino, c, d);
         } else {
-            if (destino.obtPos().x > p.x && destino.obtPos().y < p.y) {
+            if (destino.getPos().x > p.x && destino.getPos().y < p.y) {
                 diagonal_2(g, p, destino, c, d);
             } else {
-                if (destino.obtPos().x < p.x && destino.obtPos().y < p.y) {
+                if (destino.getPos().x < p.x && destino.getPos().y < p.y) {
                     diagonal_3(g, p, destino, c, d);
                 } else {
-                    if (destino.obtPos().x < p.x && destino.obtPos().y > p.y) {
+                    if (destino.getPos().x < p.x && destino.getPos().y > p.y) {
                         diagonal_4(g, p, destino, c, d);
                     }
                 }
@@ -168,9 +180,9 @@ public class Path {
     }
 
     public void diagonal_1(Graphics2D g, Point p, Nodo destino, double c, double d) {
-        destinoRX = destino.obtPos().x - (destino.getradio() * Math.cos(c));
+        destinoRX = destino.getPos().x - (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
-        destinoRY = destino.obtPos().y - (destino.getradio() * Math.sin(c));
+        destinoRY = destino.getPos().y - (destino.getradio() * Math.sin(c));
         System.out.println("y " + destinoRY);
         g.drawLine(p.x, p.y, (int) destinoRX, (int) destinoRY);
         Point aux = new Point((int) destinoRX, (int) destinoRY);
@@ -179,9 +191,9 @@ public class Path {
     }
 
     public void diagonal_2(Graphics2D g, Point p, Nodo destino, double c, double d) {
-        destinoRX = destino.obtPos().x - (destino.getradio() * Math.cos(c));
+        destinoRX = destino.getPos().x - (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
-        destinoRY = destino.obtPos().y - (destino.getradio() * Math.sin(c));
+        destinoRY = destino.getPos().y - (destino.getradio() * Math.sin(c));
         System.out.println("y " + destinoRY);
         g.drawLine(p.x, p.y, (int) destinoRX, (int) destinoRY);
         Point aux = new Point((int) destinoRX, (int) destinoRY);
@@ -190,9 +202,9 @@ public class Path {
     }
 
     public void diagonal_3(Graphics2D g, Point p, Nodo destino, double c, double d) {
-        destinoRX = destino.obtPos().x + (destino.getradio() * Math.cos(c));
+        destinoRX = destino.getPos().x + (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
-        destinoRY = destino.obtPos().y - (destino.getradio() * Math.sin(c));
+        destinoRY = destino.getPos().y - (destino.getradio() * Math.sin(c));
         System.out.println("y " + destinoRY);
         g.drawLine(p.x, p.y, (int) destinoRX, (int) destinoRY);
         Point aux = new Point((int) destinoRX, (int) destinoRY);
@@ -201,9 +213,9 @@ public class Path {
     }
 
     public void diagonal_4(Graphics2D g, Point p, Nodo destino, double c, double d) {
-        destinoRX = destino.obtPos().x + (destino.getradio() * Math.cos(c));
+        destinoRX = destino.getPos().x + (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
-        destinoRY = destino.obtPos().y - (destino.getradio() * Math.sin(c));
+        destinoRY = destino.getPos().y - (destino.getradio() * Math.sin(c));
         System.out.println("y " + destinoRY);
         g.drawLine((int) destinoRX, (int) destinoRY, p.x, p.y);
         Point aux = new Point((int) destinoRX, (int) destinoRY);
@@ -233,7 +245,7 @@ public class Path {
     public void tagdiagonal(Point punto1, Point punto2, Graphics2D g, double d) {
         double ang, angSep = 1.0;
         double tx, ty;
-        double dist = Math.sqrt(Math.pow((d / 2), 2) + Math.pow((5), 2))-20;
+        double dist = Math.sqrt(Math.pow((d / 2), 2) + Math.pow((5), 2)) - 20;
         ty = -(punto1.y - punto2.y) * 1.0;
         tx = (punto1.x - punto2.x) * 1.0;
         ang = Math.atan(ty / tx);
@@ -247,15 +259,15 @@ public class Path {
                 String.format("%s", tag), p1.x,
                 (p1.y - g.getFontMetrics().getAscent() / 2) - 10);
     }
-    
+
     public Nodo find(ArrayList<Nodo> p) {
-        return p.get(destinoi);
+        return p.get(destiny);
     }
 
     double destinoRX;
     double destinoRY;
     private String tag;
-    private int destinoi;
+    private int destiny;
     private static final Font TIPO_BASE
             = new Font(Font.SANS_SERIF, Font.ITALIC, 15);
 }
