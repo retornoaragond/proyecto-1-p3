@@ -6,7 +6,6 @@
 package simulador.modelo;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,30 +18,31 @@ import javax.xml.bind.Unmarshaller;
 
 public class Archivos {
 
-    public static void guardar_xml(String nombreArchivo, Maquina maquina)  {
+    public static void guardar_xml(String nombreArchivo, Maquina maquina) {
         try {
             String nombre = nombreArchivo + ".xml";
             JAXBContext jaxbContext = JAXBContext.newInstance(Maquina.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(maquina,System.out);
+            marshaller.marshal(maquina, new FileWriter(nombre));
             //para guardar la maquina en un archivo xml
-        } catch (JAXBException ex) {
+        } catch (JAXBException | IOException ex) {
             Logger.getLogger(Archivos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static ArrayList<Nodo> recuperar_xml(String nombreArchivo){
+    public static Maquina recuperar_xml(String nombreArchivo) {
+        Maquina maquina = new Maquina();
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Maquina.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            unmarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            Maquina maquina = (Maquina) unmarshaller.unmarshal(new File(nombreArchivo));
-            //para recuperar los nodos de la maquina desde un archivo xml
-            return null;
+            Maquina maquina1 = (Maquina) unmarshaller.unmarshal(new File(nombreArchivo));
+            maquina.setEstinicio(maquina1.getEstinicio());
+            maquina.setmaquina(maquina1.getmaquina());
         } catch (JAXBException ex) {
             Logger.getLogger(Archivos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        
+        return maquina;
     }
 }

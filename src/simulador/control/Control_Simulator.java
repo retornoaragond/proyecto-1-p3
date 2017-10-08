@@ -1,8 +1,6 @@
 package simulador.control;
 
 import java.awt.Point;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,18 +32,15 @@ public class Control_Simulator {
         datos.deleteObserver(obs);
     }
 
-    public void abrirarchivo(String archivo){
-        try {
-            datos.abrir_archivo(archivo);
-            System.out.println("guardando la maquina ventana..");
-        } catch (JAXBException ex) {
-            Logger.getLogger(Control_Simulator.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void abrirarchivo(String archivo) {
+        datos.abrir_archivo(archivo);
+            System.out.println("cargar la maquina control..");
+
     }
 
-    public void guardararchivo(String archivo){
+    public void guardararchivo(String archivo) {
         datos.guardar_archivo(archivo);
-        System.out.println("guardando la maquina ventana..");
+        System.out.println("guardando la maquina control..");
     }
 
     public void limpiar() {
@@ -75,11 +70,11 @@ public class Control_Simulator {
     public void arrastrar(Point p) {
         datos.arrastrar(p);
     }
-    
+
     public void desseleccionar() {
         datos.deseleccionar();
     }
-    
+
     public void selorigen(Point p) {
         datos.selorigen(p);
     }
@@ -99,13 +94,12 @@ public class Control_Simulator {
     public void predest(Point p) {
         datos.predest(p);
     }
-    
+
     public void agregarArista() {
         datos.agregarArista();
     }
-    
-    // </editor-fold>
 
+    // </editor-fold>
     // <editor-fold desc="Atributos" defaultstate="collapsed">
     private final Simulator datos;
     // </editor-fold>

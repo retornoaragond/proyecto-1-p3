@@ -1,6 +1,5 @@
 package simulador.modelo;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,31 +13,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "nodo")
-@XmlType(propOrder = {"name", "tipo", "pos", "radio", "paths"})
+@XmlType(propOrder = {"name", "tipo", "x", "y", "radio", "paths"})
 public class Nodo {
-private Nodo() {
+
+    private Nodo() {
     }
+
     public Nodo(int tipo, String name) {
         this.name = name;
         this.paths = new ArrayList<>();
         this.tipo = tipo;
-        this.pos = new Point(25, 25);
+        this.x = 25;
+        this.y = 25;
         this.radio = 20;
     }
-
-    
 
     public void addPaths(Path p) {
         paths.add(p);
     }
 
-    @XmlElement(name = "Pos")
-    public Point getPos() {
-        return pos;
+    @XmlElement(name = "x")
+    public int getx() {
+        return x;
     }
 
-    public void setPos(Point p) {
-        pos = p;
+    public void setx(int x) {
+        this.x = x;
+    }
+
+    @XmlElement(name = "y")
+    public int gety() {
+        return y;
+    }
+
+    public void sety(int y) {
+        this.y = y;
     }
 
     @XmlElementWrapper(name = "listPaths")
@@ -89,17 +98,17 @@ private Nodo() {
                 g.setColor(new Color(255, 0, 0));
             }
         }
-        Ellipse2D el = new Ellipse2D.Double(pos.x - radio, pos.y - radio, 2 * radio, 2 * radio);
+        Ellipse2D el = new Ellipse2D.Double(x - radio, y - radio, 2 * radio, 2 * radio);
         g.fill(el);
         g.setColor(Color.BLACK);
-        Ellipse2D e2 = new Ellipse2D.Double(pos.x - radio, pos.y - radio, 2 * radio, 2 * radio);
+        Ellipse2D e2 = new Ellipse2D.Double(x - radio, y - radio, 2 * radio, 2 * radio);
         g.draw(e2);
         g.setColor(Color.BLACK);
         g.setFont(TIPO_BASE);
         g.drawString(
                 name,
-                pos.x - fm.stringWidth(name) / 2 - 1,
-                pos.y + fm.getAscent() / 2);
+                x - fm.stringWidth(name) / 2 - 1,
+                y + fm.getAscent() / 2);
     }
 
     private static final Font TIPO_BASE
@@ -108,6 +117,7 @@ private Nodo() {
     private String name;
     private int tipo;
     private ArrayList<Path> paths;
-    private Point pos;
+    private int x;
+    private int y;
     private int radio;
 }

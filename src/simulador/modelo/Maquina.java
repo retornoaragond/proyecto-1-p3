@@ -1,7 +1,6 @@
 package simulador.modelo;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -9,29 +8,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "Maquina-Estados")
-@XmlType(propOrder = {"estinicio", "maquina"})
+@XmlType(propOrder = {"maquina", "estinicio"})
 public class Maquina {
 
     public Maquina() {
         maquina = new ArrayList<>();
         estinicio = false;
     }
-    
+
     @XmlElementWrapper(name = "maquina")
     @XmlElement(name = "nodo")
-    public List<Nodo> getMaquina() {
+    public ArrayList<Nodo> getmaquina() {
         return maquina;
     }
-    
-    public void setMaquina(ArrayList<Nodo> maquina) {
-        this.maquina = maquina;
+
+    public void setmaquina(ArrayList<Nodo> maquina) {
+        this.maquina= maquina;
     }
-    
+
     @XmlElement(name = "inicial")
     public boolean getEstinicio() {
         return estinicio;
     }
-    
+
     public void setEstinicio(boolean e) {
         estinicio = e;
     }
@@ -94,7 +93,6 @@ public class Maquina {
             boolean flag = false;
             boolean enter = false;
             for (int i = 0; i < a.getpaths().size(); i++) {
-
                 if (a.getpaths().get(i).isInTag(s[h])) {
                     enter = true;
                     flag = verificadorR(s, h + 1, maquina.get(a.getpaths().get(i).getdestiny()));

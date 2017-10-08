@@ -6,16 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 public class Simulator extends Observable {
 
@@ -27,9 +20,11 @@ public class Simulator extends Observable {
 
     // </editor-fold>
     // <editor-fold desc="Metodos" defaultstate="collapsed">
-    public void abrir_archivo(String nombre) throws JAXBException {
-        maquina.setMaquina(Archivos.recuperar_xml(nombre));
-        System.out.println("guardando la maquina ventana..");
+    public void abrir_archivo(String nombre){
+        Maquina aux = Archivos.recuperar_xml(nombre);
+        maquina.setmaquina(aux.getmaquina());
+        maquina.setEstinicio(aux.getEstinicio());
+        System.out.println("cargar la maquina modelo..");
         //actualizar el observador
         setChanged();
         notifyObservers();
@@ -37,7 +32,7 @@ public class Simulator extends Observable {
 
     public void guardar_archivo(String nombre){
         Archivos.guardar_xml(nombre, maquina);
-        System.out.println("guardando la maquina ventana..");
+        System.out.println("guardando la maquina modelo..");
     }
 
     public void crea_estado(int tipo, String nom) {
@@ -61,10 +56,10 @@ public class Simulator extends Observable {
     public void verificar_hilera(String hilera) {
         System.out.printf("hilera %s", hilera);
         if (maquina.verificar(hilera)) {
-            String m = "Hilera Aceptada: " + hilera;
+            String m = "HILERA ACEPTADA: " + hilera;
             JOptionPane.showMessageDialog(null, m);
         } else {
-            String m = "Hilera No Aceptada: " + hilera;
+            String m = "HILERA NO ACEPTADA: " + hilera;
             JOptionPane.showMessageDialog(null, m);
         }
         System.out.println("verificando hilera modelo..");
@@ -78,10 +73,10 @@ public class Simulator extends Observable {
         if (origen != -1) {
             lineaprevia(g);
         }
-        for (Nodo n : maquina.getMaquina()) {
+        for (Nodo n : maquina.getmaquina()) {
 
             for (Path a : n.getpaths()) {
-                a.dibujar(g, n.getPos(), (ArrayList<Nodo>) maquina.getMaquina());
+                a.dibujar(g, new Point(n.getx(),n.gety()), (ArrayList<Nodo>) maquina.getmaquina());
             }
             g.setStroke(new BasicStroke(2.0f));
             n.dibujar(g);
@@ -95,10 +90,10 @@ public class Simulator extends Observable {
 
     public int find(Point p) {
         int i = 0;
-        for (Nodo d : maquina.getMaquina()) {
+        for (Nodo d : maquina.getmaquina()) {
 
-            Ellipse2D el = new Ellipse2D.Double(d.getPos().x - d.getradio(),
-                    d.getPos().y - d.getradio(),
+            Ellipse2D el = new Ellipse2D.Double(d.getx() - d.getradio(),
+                    d.gety() - d.getradio(),
                     2 * d.getradio(), 2 * d.getradio()
             );
             if (el.contains(p)) {
@@ -117,8 +112,9 @@ public class Simulator extends Observable {
     }
 
     public void mover(Point p) {
-        Nodo est = maquina.getMaquina().get(seleccionada);
-        est.setPos(p);
+        Nodo est = maquina.getmaquina().get(seleccionada);
+        est.setx(p.x);
+        est.sety(p.y);
         setChanged();
         notifyObservers();
     }
@@ -131,8 +127,8 @@ public class Simulator extends Observable {
         g.setStroke(new BasicStroke(grosor, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER, 10.0f, style, 0));
         g.drawLine(
-                maquina.getMaquina().get(origen).getPos().x,
-                maquina.getMaquina().get(origen).getPos().y,
+                maquina.getmaquina().get(origen).getx(),
+                maquina.getmaquina().get(origen).gety(),
                 predest.x, predest.y);
     }
 
@@ -146,7 +142,7 @@ public class Simulator extends Observable {
         if (destino != -1) {
             String tag = JOptionPane.showInputDialog(
                     "tag:");
-            maquina.getMaquina().get(origen).addPaths(
+            maquina.getmaquina().get(origen).addPaths(
                     new Path(tag, destino));
         }
         setChanged();
