@@ -1,3 +1,7 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+*/
 package simulador.modelo;
 
 import java.awt.BasicStroke;
@@ -19,13 +23,13 @@ public class Simulator extends Observable {
     }
 
     // </editor-fold>
+    
     // <editor-fold desc="Metodos" defaultstate="collapsed">
     public void abrir_archivo(String nombre){
         Maquina aux = Archivos.recuperar_xml(nombre);
         maquina.setmaquina(aux.getmaquina());
         maquina.setEstinicio(aux.getEstinicio());
         System.out.println("cargar la maquina modelo..");
-        //actualizar el observador
         setChanged();
         notifyObservers();
     }
@@ -38,7 +42,6 @@ public class Simulator extends Observable {
     public void crea_estado(int tipo, String nom) {
         maquina.agregar_estado(tipo, nom);
         System.out.println("creo estado..");
-        //actualizar la vista
         setChanged();
         System.out.println("seteo el cambio..");
         notifyObservers();
@@ -48,7 +51,6 @@ public class Simulator extends Observable {
     public void limpiar() {
         maquina.limpiar();
         System.out.println("limpiando la maquina ventana..");
-        //actualizar el observador
         setChanged();
         notifyObservers();
     }
@@ -170,6 +172,7 @@ public class Simulator extends Observable {
     }
 
     // </editor-fold>
+    
     // <editor-fold desc="Atributos" defaultstate="collapsed">
     private final Maquina maquina;
     private int seleccionada = -1;

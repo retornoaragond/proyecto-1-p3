@@ -1,10 +1,11 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+ */
 package simulador.control;
 
 import java.awt.Point;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBException;
 import simulador.modelo.Simulator;
 
 public class Control_Simulator {
@@ -19,8 +20,8 @@ public class Control_Simulator {
     public Control_Simulator() {
         this(new Simulator());
     }
-
     // </editor-fold>
+    
     // <editor-fold desc="Métodos" defaultstate="collapsed">
     public void registrar(Observer obs) {
         System.out.printf("Registrando observador: %s..%n", obs);
@@ -34,7 +35,7 @@ public class Control_Simulator {
 
     public void abrirarchivo(String archivo) {
         datos.abrir_archivo(archivo);
-            System.out.println("cargar la maquina control..");
+        System.out.println("cargar la maquina control..");
 
     }
 
@@ -100,6 +101,7 @@ public class Control_Simulator {
     }
 
     // </editor-fold>
+    
     // <editor-fold desc="Atributos" defaultstate="collapsed">
     private final Simulator datos;
     // </editor-fold>

@@ -1,3 +1,7 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+*/
 package simulador;
 
 import javax.swing.JFrame;

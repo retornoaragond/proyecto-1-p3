@@ -1,14 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+*/
 package simulador.modelo;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -25,7 +23,6 @@ public class Archivos {
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(maquina, new FileWriter(nombre));
-            //para guardar la maquina en un archivo xml
         } catch (JAXBException | IOException ex) {
             Logger.getLogger(Archivos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,7 +39,6 @@ public class Archivos {
         } catch (JAXBException ex) {
             Logger.getLogger(Archivos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return maquina;
     }
 }

@@ -1,9 +1,12 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+*/
 package simulador.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -63,6 +66,7 @@ public class Ventana_Simulador extends JFrame
                 panelPrincipal = new PanelMaquina());
         System.out.println("Configurando componentes..");
         ajustarMenus(c);
+        
         // <editor-fold desc="Archivo" defaultstate="collapsed">
         itemRecuperar.addActionListener(new ActionListener() {
             @Override
@@ -88,6 +92,7 @@ public class Ventana_Simulador extends JFrame
             }
         });
         // </editor-fold>
+        
         // <editor-fold desc="Estados" defaultstate="collapsed">
         itemInicial.addActionListener(new ActionListener() {
             @Override
@@ -132,6 +137,7 @@ public class Ventana_Simulador extends JFrame
             }
         });
         // </editor-fold>
+        
         // <editor-fold desc="Verificar" defaultstate="collapsed">
         itemHilera.addActionListener(new ActionListener() {
             @Override
@@ -147,6 +153,7 @@ public class Ventana_Simulador extends JFrame
             }
         });
         // </editor-fold>
+        
         // <editor-fold desc="Mouse" defaultstate="collapsed">
         panelPrincipal.addMouseListener(new MouseAdapter() {
 
@@ -174,7 +181,6 @@ public class Ventana_Simulador extends JFrame
                 } else {
                     gestorPrincipal.seldest(e.getPoint());
                     gestorPrincipal.agregarArista();
-
                     System.out.printf("delineado [%d,%d]\n",
                             e.getPoint().x, e.getPoint().y);
                     gestorPrincipal.desselorigen();
@@ -236,6 +242,7 @@ public class Ventana_Simulador extends JFrame
     }
 
     // </editor-fold>
+    
     // <editor-fold desc="Métodos" defaultstate="collapsed">
     public void cerrarVentana() {
         if (JOptionPane.showConfirmDialog(this,
@@ -273,8 +280,8 @@ public class Ventana_Simulador extends JFrame
             gestorPrincipal.guardararchivo(ruta_Archivo_save);
         }
     }
-
     // </editor-fold>
+    
     // <editor-fold desc="Atributos" defaultstate="collapsed" >
     private final Control_Simulator gestorPrincipal;
 
@@ -300,6 +307,5 @@ public class Ventana_Simulador extends JFrame
             = new FileNameExtensionFilter(
                     "Archivos .xml", "xml"
             );
-
     // </editor-fold>
 }

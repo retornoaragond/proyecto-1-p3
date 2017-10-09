@@ -1,3 +1,7 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+ */
 package simulador.modelo;
 
 import java.awt.BasicStroke;
@@ -14,7 +18,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "path")
 @XmlType(propOrder = {"tag", "destiny"})
 public class Path {
-
+    
+    // <editor-fold desc="Constructores" defaultstate="collapsed">
     public Path(String s, int d) {
         this.tag = s;
         this.destiny = d;
@@ -22,12 +27,13 @@ public class Path {
 
     public Path() {
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Metodos" defaultstate="collapsed">
     @XmlElement(name = "destiny")
     public int getdestiny() {
         return destiny;
     }
-
 
     public void setdestiny(int n) {
         this.destiny = n;
@@ -50,13 +56,17 @@ public class Path {
         }
         return false;
     }
-
+    
+    public Nodo find(ArrayList<Nodo> p) {
+        return p.get(destiny);
+    }
+    
+    // <editor-fold desc="Dibujar" defaultstate="collapsed">
     public void dibujar(Graphics2D g, Point p, ArrayList<Nodo> l) {
         Nodo destino = find(l);
         g.setColor(Color.BLACK);
         g.setFont(TIPO_BASE);
         g.setStroke(new BasicStroke(2.0f));
-
         if (p.x == destino.getx() && destino.gety() == p.y) {
             dibujaciclo(g, p, destino);
         } else {
@@ -71,7 +81,8 @@ public class Path {
             }
         }
     }
-
+    
+    // <editor-fold desc="Ciclo" defaultstate="collapsed">
     public void dibujaciclo(Graphics2D g, Point p, Nodo destino) {
         int[] xPoints = {
             destino.getx(),
@@ -97,7 +108,9 @@ public class Path {
         Point aux1 = new Point(xPoints[4], yPoints[4]);
         dibujarFlecha(aux, aux1, g);
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Vertical" defaultstate="collapsed">
     public void dibujavertical(Graphics2D g, Point p, Nodo destino) {
         if (destino.gety() > p.y) {
             g.drawLine(p.x, p.y, destino.getx(), destino.gety()
@@ -127,7 +140,9 @@ public class Path {
             dibujarFlecha(p, aux, g);
         }
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Horizaontal" defaultstate="collapsed">
     public void dibujahorizaontal(Graphics2D g, Point p, Nodo destino) {
         if (destino.getx() > p.x) {
             g.drawLine(p.x, p.y, destino.getx() - destino.getradio(),
@@ -152,9 +167,10 @@ public class Path {
                     destino.gety());
             dibujarFlecha(p, aux, g);
         }
-
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Diagonales" defaultstate="collapsed">
     public void dibujadiagonales(Graphics2D g, Point p, Nodo destino) {
         double d = Math.sqrt(Math.pow((destino.getx() - p.x), 2)
                 + Math.pow((destino.gety() - p.y), 2));
@@ -178,7 +194,8 @@ public class Path {
         System.out.println("destino [ " + (int) destinoRX
                 + "," + (int) destinoRY + "]");
     }
-
+    
+    // <editor-fold desc="Diagonal_1" defaultstate="collapsed">
     public void diagonal_1(Graphics2D g, Point p, Nodo destino, double c, double d) {
         destinoRX = destino.getx() - (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
@@ -189,7 +206,9 @@ public class Path {
         dibujarFlecha(p, aux, g);
         tagdiagonal(p, aux, g, d);
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Diagonal_2" defaultstate="collapsed">
     public void diagonal_2(Graphics2D g, Point p, Nodo destino, double c, double d) {
         destinoRX = destino.getx() - (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
@@ -200,7 +219,9 @@ public class Path {
         dibujarFlecha(p, aux, g);
         tagdiagonal(p, aux, g, d);
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Diagonal_3" defaultstate="collapsed">
     public void diagonal_3(Graphics2D g, Point p, Nodo destino, double c, double d) {
         destinoRX = destino.getx() + (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
@@ -211,7 +232,9 @@ public class Path {
         dibujarFlecha(p, aux, g);
         tagdiagonal(p, aux, g, d);
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Diagonal_4" defaultstate="collapsed">
     public void diagonal_4(Graphics2D g, Point p, Nodo destino, double c, double d) {
         destinoRX = destino.getx() + (destino.getradio() * Math.cos(c));
         System.out.println("x " + destinoRX);
@@ -222,7 +245,11 @@ public class Path {
         dibujarFlecha(p, aux, g);
         tagdiagonal(p, aux, g, d);
     }
-
+    // </editor-fold>
+    
+    // </editor-fold>
+    
+    // <editor-fold desc="Flecha" defaultstate="collapsed">
     public void dibujarFlecha(Point punto1, Point punto2, Graphics2D g) {
         double ang, angSep = 45.0;
         double tx, ty;
@@ -241,7 +268,9 @@ public class Path {
         g.drawLine(p1.x, p1.y, punto.x, punto.y);
         g.drawLine(p2.x, p2.y, punto.x, punto.y);
     }
+    // </editor-fold>
 
+    // <editor-fold desc="tag en Diagonal" defaultstate="collapsed">
     public void tagdiagonal(Point punto1, Point punto2, Graphics2D g, double d) {
         double ang, angSep = 1.0;
         double tx, ty;
@@ -259,10 +288,13 @@ public class Path {
                 String.format("%s", tag), p1.x,
                 (p1.y - g.getFontMetrics().getAscent() / 2) - 10);
     }
-
-    public Nodo find(ArrayList<Nodo> p) {
-        return p.get(destiny);
-    }
+    // </editor-fold>
+    
+    // </editor-fold>
+    
+    // </editor-fold>
+    
+    // <editor-fold desc="Atributos" defaultstate="collapsed">
 
     double destinoRX;
     double destinoRY;
@@ -270,4 +302,5 @@ public class Path {
     private int destiny;
     private static final Font TIPO_BASE
             = new Font(Font.SANS_SERIF, Font.ITALIC, 15);
+    // </editor-fold>
 }

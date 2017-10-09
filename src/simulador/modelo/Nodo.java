@@ -1,3 +1,7 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+*/
 package simulador.modelo;
 
 import java.util.ArrayList;
@@ -15,7 +19,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "nodo")
 @XmlType(propOrder = {"name", "tipo", "x", "y", "radio", "paths"})
 public class Nodo {
-
+    
+    // <editor-fold desc="Constructores" defaultstate="collapsed">
     private Nodo() {
     }
 
@@ -27,7 +32,9 @@ public class Nodo {
         this.y = 25;
         this.radio = 20;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Metodos" defaultstate="collapsed">
     public void addPaths(Path p) {
         paths.add(p);
     }
@@ -86,7 +93,8 @@ public class Nodo {
     public void setradio(int r) {
         this.radio = r;
     }
-
+    
+    // <editor-fold desc="Dibujar" defaultstate="collapsed">
     public void dibujar(Graphics2D g) {
         FontMetrics fm = g.getFontMetrics();
         if (tipo == 1) {
@@ -110,7 +118,11 @@ public class Nodo {
                 x - fm.stringWidth(name) / 2 - 1,
                 y + fm.getAscent() / 2);
     }
-
+    // </editor-fold>
+    
+    // </editor-fold>
+    
+    // <editor-fold desc="Atributos" defaultstate="collapsed">
     private static final Font TIPO_BASE
             = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
 
@@ -120,4 +132,5 @@ public class Nodo {
     private int x;
     private int y;
     private int radio;
+    // </editor-fold>
 }

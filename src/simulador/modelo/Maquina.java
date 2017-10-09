@@ -1,3 +1,8 @@
+/*
+Esteban Espinoza Fallas 402290345
+José Fabio Alfaro Quesada 207580494
+*/
+
 package simulador.modelo;
 
 import java.util.ArrayList;
@@ -10,12 +15,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Maquina-Estados")
 @XmlType(propOrder = {"maquina", "estinicio"})
 public class Maquina {
-
+    
+    // <editor-fold desc="Constructor" defaultstate="collapsed">
     public Maquina() {
         maquina = new ArrayList<>();
         estinicio = false;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Metodos" defaultstate="collapsed">
     @XmlElementWrapper(name = "maquina")
     @XmlElement(name = "nodo")
     public ArrayList<Nodo> getmaquina() {
@@ -65,7 +73,9 @@ public class Maquina {
         Path transicion = new Path(tag, searchNext(next));
         n.addPaths(transicion);
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Verificar" defaultstate="collapsed">
     public boolean verificar(String hilera) {
         if (estinicio) {
             return verificadorR(hilera.toCharArray(), 0, maquina.get(0));
@@ -116,8 +126,10 @@ public class Maquina {
     private boolean accept(Nodo n) {
         return n.gettipo() == 3;
     }
-
+    // </editor-fold>
+    
+    // <editor-fold desc="Atributos" defaultstate="collapsed">
     private ArrayList<Nodo> maquina;
     private boolean estinicio;
-
+    // </editor-fold>
 }
