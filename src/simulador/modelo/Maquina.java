@@ -92,14 +92,19 @@ public class Maquina {
         } else {
             boolean flag = false;
             boolean enter = false;
+            boolean exist = false;
             for (int i = 0; i < a.getpaths().size(); i++) {
                 if (a.getpaths().get(i).isInTag(s[h])) {
                     enter = true;
+                    exist = true;
                     flag = verificadorR(s, h + 1, maquina.get(a.getpaths().get(i).getdestiny()));
                 }
                 if (flag) {
                     break;
                 }
+            }
+            if(!exist){
+                return false;
             }
             if (enter == true) {
                 return flag;
